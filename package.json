@@ -1,0 +1,39 @@
+{
+  "name": "@atia/raf",
+  "version": "1.0.0",
+  "description": "A package for handling react-admin apis with firebase",
+  "main": "lib/esm/index.js",
+  "types": "lib/esm/index.d.ts",
+  "author": "Ahmed Atia",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devA7md/-atia-raf"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "compile:watch": "tsc --watch",
+    "build:cjs": "tsc --module CommonJS --outDir lib/cjs",
+    "build": "rm lib -rf && npm run compile && npm run build:cjs",
+    "test": "jest src --watchAll",
+    "lint": "eslint src",
+    "prettier": "prettier --write \"src/**/*.{ts,json,scss}\""
+  },
+  "peerDependencies": {
+    "firebase": ">= 9",
+    "ramda": ">= 0.28",
+    "react-admin": ">= 4"
+  },
+  "keywords": [
+    "react-admin",
+    "firebase"
+  ],
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "jest": "^28.1.1",
+    "prettier": "^2.7.1"
+  }
+}
