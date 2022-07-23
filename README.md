@@ -1,6 +1,6 @@
 # @atia/raf
 
-A basic implementation for react-admin (v4) with firebase (v9)
+A basic implementation for react-admin data and auth provider using latest versions
 
 ## Installation
 
@@ -50,6 +50,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
-
-[![License](https://img.shields.io/npm/l/react-admin-firebase.svg)](https://github.com/benwinding/react-admin-firebase/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/deva7md/atia-raf)](https://github.com/devA7md/atia-raf/blob/main/LICENSE)
