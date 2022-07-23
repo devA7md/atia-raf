@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/devA7md/-atia-raf"
+    "url": "https://github.com/devA7md/atia-raf"
   },
   "scripts": {
     "compile": "tsc --project tsconfig.build.json",
@@ -27,7 +27,6 @@
   },
   "peerDependencies": {
     "firebase": ">= 9",
-    "ramda": ">= 0.28",
     "react-admin": ">= 4"
   },
   "keywords": [
@@ -37,6 +36,7 @@
   "devDependencies": {
     "@firebase/rules-unit-testing": "^2.0.3",
     "@types/jest": "^28.1.6",
+    "@types/ramda": "^0.28.15",
     "eslint": "^8.20.0",
     "husky": "^8.0.1",
     "jest": "^28.1.1",
@@ -50,5 +50,8 @@
     "test/**/*.ts": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "ramda": "^0.28.0"
   }
 }
