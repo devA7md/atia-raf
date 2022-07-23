@@ -1,11 +1,15 @@
 import { DataProvider, UpdateParams, UpdateResult } from "react-admin";
 import { doc, updateDoc } from "firebase/firestore";
-import { ref } from "firebase/storage";
-import { curry, omit, path } from "ramda";
+import { curry, omit } from "ramda";
 
 import { CustomDataProvider, DataProviderModules } from "../../types";
-import { prepareDataUploads } from "../helpers/fileUploader/prepareData";
-import { deleteFiles, fileUploader } from "../helpers/fileUploader";
+import {
+  deleteFiles,
+  fileUploader,
+  getPreviousFileRefs,
+  prepareDataUploads,
+  UploadedRefs,
+} from "../helpers/fileUploader";
 import { applyUpdateTimestamp } from "../../utils";
 
 type Update = DataProvider["update"];
@@ -26,30 +30,34 @@ export const update = curry<
     defaultQuery = customDataProvider[resource].update!;
   } else {
     defaultQuery = async (resource, params): Promise<UpdateResult> => {
-      const uploads = prepareDataUploads(params.data);
-      const { dataWithUploadedFiles, uploadedRefs } = await fileUploader(storage, {
-        resource,
-        uploads,
-        originalData: omit(["id"])(params.data),
-      });
+      let uploadedRefs: UploadedRefs = {};
 
       try {
+        const uploads = prepareDataUploads(params.data);
+        const { dataWithUploadedFiles, ...rest } = await fileUploader({
+          logger,
+          storage,
+          fileUploaderData: {
+            resource,
+            uploads,
+            originalData: omit(["id"])(params.data),
+          },
+        });
+        uploadedRefs = rest.uploadedRefs;
+
         if (dataWithUploadedFiles) {
           await updateDoc(doc(db, resource, params.id as string), applyUpdateTimestamp(dataWithUploadedFiles));
 
           // delete old files if user replaced its value with new one
-          deleteFiles(
-            Object.keys(uploadedRefs).reduce((acc, key) => {
-              return {
-                ...acc,
-                [key]: ref(storage, path<any>(key.split("."), params.previousData).path),
-              };
-            }, {})
-          );
+          deleteFiles({
+            logger,
+            fileRefs: getPreviousFileRefs({ uploadedRefs, previousData: params.previousData, storage }),
+          });
         }
       } catch (ex: any) {
         logger(ex.message);
-        deleteFiles(uploadedRefs);
+        await deleteFiles({ fileRefs: uploadedRefs, logger });
+        throw new Error(ex);
       }
 
       return {

@@ -3,7 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { curry } from "ramda";
 
 import { CustomDataProvider, DataProviderModules } from "../../types";
-import { injectMetaDataToRecord } from "../../utils";
+import { addIdToDocument } from "../../utils";
 
 type GetOne = DataProvider["getOne"];
 
@@ -28,10 +28,11 @@ export const getOne = curry<
       try {
         const snapshot = await getDoc(doc(db, resource, params.id));
         if (snapshot.exists()) {
-          data = injectMetaDataToRecord(snapshot);
+          data = addIdToDocument(snapshot);
         }
       } catch (ex: any) {
         logger(ex.message);
+        throw new Error(ex);
       }
 
       return {

@@ -21,6 +21,7 @@ export const login = curry<
         logger(userCredential.user);
       } catch (ex: any) {
         logger(ex.message);
+        throw new Error(ex);
       }
     };
 

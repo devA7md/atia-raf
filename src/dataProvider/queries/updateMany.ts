@@ -35,6 +35,7 @@ export const updateMany = curry<
         data = params.ids as string[];
       } catch (ex: any) {
         logger(ex.message);
+        throw new Error(ex);
       }
 
       return {

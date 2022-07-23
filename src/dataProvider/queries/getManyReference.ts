@@ -3,7 +3,7 @@ import { collection, getDocs, limit, orderBy, OrderByDirection, query, where } f
 import { curry } from "ramda";
 
 import { CustomDataProvider, DataProviderModules } from "../../types";
-import { injectMetaDataToRecord } from "../../utils";
+import { addIdToDocument } from "../../utils";
 
 type GetManyReference = DataProvider["getManyReference"];
 
@@ -47,9 +47,10 @@ export const getManyReference = curry<
         }
 
         const snapshots = await getDocs(query(collection(db, resource), ...queryConstraint));
-        data = snapshots.docs.map((snapshot) => injectMetaDataToRecord(snapshot, true));
+        data = snapshots.docs.map(addIdToDocument);
       } catch (ex: any) {
         logger(ex.message);
+        throw new Error(ex);
       }
 
       return {

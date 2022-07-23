@@ -15,7 +15,7 @@ export const getIdentity = (
   else
     defaultQuery = async () => {
       try {
-        const user = await checkAuthedUser(auth);
+        const user = await checkAuthedUser({ auth, logger });
         if (user) {
           return Promise.resolve({
             id: user.uid,

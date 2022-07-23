@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "declaration": true,
     "sourceMap": true,
-    "outDir": "./lib/esm"
+    "types": ["jest"],
+    "outDir": "lib/esm"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

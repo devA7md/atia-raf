@@ -19,7 +19,7 @@ export const getPermissions = curry<
   else
     defaultQuery = async () => {
       try {
-        return await checkAuthedUser(auth);
+        return await checkAuthedUser({ auth, logger });
       } catch (ex: any) {
         logger(ex.message);
       }

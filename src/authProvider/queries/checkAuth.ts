@@ -21,7 +21,7 @@ export const checkAuth = curry<
       logger({ params });
 
       try {
-        await checkAuthedUser(auth);
+        await checkAuthedUser({ auth, logger });
         return Promise.resolve();
       } catch (ex: any) {
         logger(ex);

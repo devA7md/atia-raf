@@ -16,9 +16,9 @@ export interface FileUploaderData {
   originalData: Record<string, any>;
 }
 
-export type UploadRef = Record<string, StorageReference>;
+export type UploadedRefs = Record<string, StorageReference>;
 
 export interface FileUploaderReturn {
   dataWithUploadedFiles: Record<string, any> | null;
-  uploadedRefs: UploadRef;
+  uploadedRefs: UploadedRefs;
 }

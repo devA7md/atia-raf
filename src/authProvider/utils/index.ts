@@ -1,6 +1,8 @@
 import { Auth, onAuthStateChanged, User } from "firebase/auth";
 
-export const checkAuthedUser = (auth: Auth) => {
+import { Logger } from "../../types";
+
+export const checkAuthedUser = ({ auth, logger }: { auth: Auth; logger: Logger }) => {
   return new Promise<User | null>((resolve, reject) => {
     const unsubscribeToAuthChange = onAuthStateChanged(auth, {
       next(currentUser) {
@@ -9,7 +11,7 @@ export const checkAuthedUser = (auth: Auth) => {
         else reject("User not found");
       },
       error(ex) {
-        console.log(ex.message);
+        logger(ex.message);
         unsubscribeToAuthChange();
         reject(ex.message);
       },

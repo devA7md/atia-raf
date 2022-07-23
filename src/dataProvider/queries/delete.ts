@@ -29,6 +29,7 @@ export const deleteQuery = curry<
         data = { id: params.id };
       } catch (ex: any) {
         logger(ex.message);
+        throw new Error(ex);
       }
 
       return {

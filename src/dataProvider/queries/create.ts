@@ -3,8 +3,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { curry } from "ramda";
 
 import { CustomDataProvider, DataProviderModules } from "../../types";
-import { deleteFiles, fileUploader } from "../helpers/fileUploader";
-import { prepareDataUploads } from "../helpers/fileUploader/prepareData";
+import { deleteFiles, fileUploader, prepareDataUploads, UploadedRefs } from "../helpers/fileUploader";
 import { applyCreateTimestamp } from "../../utils";
 
 type Create = DataProvider["create"];
@@ -26,23 +25,29 @@ export const create = curry<
   } else {
     defaultQuery = async (resource, params): Promise<CreateResult> => {
       let data: Record<string, any> = { id: "" };
-
-      const uploads = prepareDataUploads(params.data);
-      const { dataWithUploadedFiles, uploadedRefs } = await fileUploader(storage, {
-        resource,
-        uploads,
-        originalData: params.data,
-      });
+      let uploadedRefs: UploadedRefs = {};
 
       try {
+        const uploads = prepareDataUploads(params.data);
+        const { dataWithUploadedFiles, ...rest } = await fileUploader({
+          logger,
+          storage,
+          fileUploaderData: {
+            resource,
+            uploads,
+            originalData: params.data,
+          },
+        });
+        uploadedRefs = rest.uploadedRefs;
+
         if (dataWithUploadedFiles) {
           const result = await addDoc(collection(db, resource), applyCreateTimestamp(dataWithUploadedFiles));
-
           data = { id: result.id };
         }
       } catch (ex: any) {
         logger(ex.message);
-        deleteFiles(uploadedRefs);
+        await deleteFiles({ fileRefs: uploadedRefs, logger });
+        throw new Error(ex);
       }
 
       return {

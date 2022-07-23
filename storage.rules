@@ -1,0 +1,5 @@
+service cloud.storage {
+  match /databases/{database}/documents {
+   //
+  }
+}

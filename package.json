@@ -2,7 +2,8 @@
   "name": "@atia/raf",
   "version": "1.0.0",
   "description": "A package for handling react-admin apis with firebase",
-  "main": "lib/esm/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "types": "lib/esm/index.d.ts",
   "author": "Ahmed Atia",
   "license": "MIT",
@@ -18,7 +19,7 @@
     "compile:watch": "tsc --watch",
     "build:cjs": "tsc --module CommonJS --outDir lib/cjs",
     "build": "rm lib -rf && npm run compile && npm run build:cjs",
-    "test": "jest src --watchAll",
+    "test": "firebase emulators:exec \"jest ./tests/* --watchAll --detectOpenHandles --verbose\"",
     "lint": "eslint src",
     "prettier": "prettier --write \"src/**/*.{ts,json,scss}\""
   },
@@ -32,6 +33,8 @@
     "firebase"
   ],
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^2.0.3",
+    "@types/jest": "^28.1.6",
     "eslint": "^8.20.0",
     "jest": "^28.1.1",
     "prettier": "^2.7.1"

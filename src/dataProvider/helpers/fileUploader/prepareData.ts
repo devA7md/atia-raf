@@ -1,4 +1,7 @@
-import { Upload } from "./types";
+import { FirebaseStorage, ref } from "firebase/storage";
+import { path } from "ramda";
+
+import { Upload, UploadedRefs } from "./types";
 
 export const prepareDataUploads = (data: Record<string, any>) => {
   const uploads: Upload[] = [];
@@ -35,4 +38,21 @@ export const parseDataRecursively = (fieldPath: string, value: any, uploads: Upl
   Object.entries(value).forEach(([nestedFieldPath, nestedValue]) => {
     return parseDataRecursively(`${fieldPath}.${nestedFieldPath}`, nestedValue, uploads);
   });
+};
+
+export const getPreviousFileRefs = ({
+  uploadedRefs,
+  storage,
+  previousData,
+}: {
+  uploadedRefs: UploadedRefs;
+  previousData: Record<string, any>;
+  storage: FirebaseStorage;
+}) => {
+  return Object.keys(uploadedRefs).reduce((acc, key) => {
+    return {
+      ...acc,
+      [key]: ref(storage, path<any>(key.split("."), previousData).path),
+    };
+  }, {});
 };
