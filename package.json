@@ -33,6 +33,9 @@
     "react-admin",
     "firebase"
   ],
+  "dependencies": {
+    "ramda": "^0.28.0"
+  },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^2.0.3",
     "@types/jest": "^28.1.6",
@@ -51,7 +54,7 @@
       "prettier --write"
     ]
   },
-  "dependencies": {
-    "ramda": "^0.28.0"
+  "publishConfig": {
+    "access": "public"
   }
 }
