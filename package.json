@@ -22,6 +22,7 @@
     "build": "rm lib -rf && npm run build:esm && npm run build:cjs",
     "test": "firebase emulators:exec \"jest ./tests/* --watchAll --detectOpenHandles --verbose\"",
     "lint": "eslint src",
+    "pre-commit": "lint-staged",
     "prettier": "prettier --write \"src/**/*.{ts,json,scss}\""
   },
   "peerDependencies": {
@@ -37,7 +38,16 @@
     "@firebase/rules-unit-testing": "^2.0.3",
     "@types/jest": "^28.1.6",
     "eslint": "^8.20.0",
+    "husky": "^8.0.1",
     "jest": "^28.1.1",
     "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+    "src/**/*.{ts}": [
+      "prettier --write"
+    ],
+    "test/**/*.{ts}": [
+      "prettier --write"
+    ]
   }
 }
