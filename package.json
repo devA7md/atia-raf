@@ -15,10 +15,11 @@
     "url": "https://github.com/devA7md/-atia-raf"
   },
   "scripts": {
-    "compile": "tsc",
-    "compile:watch": "tsc --watch",
-    "build:cjs": "tsc --module CommonJS --outDir lib/cjs",
-    "build": "rm lib -rf && npm run compile && npm run build:cjs",
+    "compile": "tsc --project tsconfig.build.json",
+    "compile:watch": "tsc --project tsconfig.build.json --watch",
+    "build:esm": "tsc --project tsconfig.build.json",
+    "build:cjs": "tsc --project tsconfig.build.json --module CommonJS --outDir lib/cjs",
+    "build": "rm lib -rf && npm run build:esm && npm run build:cjs",
     "test": "firebase emulators:exec \"jest ./tests/* --watchAll --detectOpenHandles --verbose\"",
     "lint": "eslint src",
     "prettier": "prettier --write \"src/**/*.{ts,json,scss}\""
