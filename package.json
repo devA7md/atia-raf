@@ -2,9 +2,9 @@
   "name": "@atia/raf",
   "version": "1.0.0",
   "description": "A package for handling react-admin apis with firebase",
+  "types": "lib/cjs/index.d.ts",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
-  "types": "lib/esm/index.d.ts",
   "author": "Ahmed Atia",
   "license": "MIT",
   "files": [
