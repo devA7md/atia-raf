@@ -13,12 +13,12 @@ export const logout = curry<
   if (customAuthProvider.checkAuth) defaultQuery = customAuthProvider.checkAuth;
   else
     defaultQuery = async (params: any) => {
-      logger(params);
+      logger("[logout params]: ", params);
 
       try {
         await auth.signOut();
       } catch (ex: any) {
-        logger(ex.message);
+        logger("[logout error]: ", ex.message);
       }
     };
 

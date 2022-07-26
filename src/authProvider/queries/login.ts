@@ -20,7 +20,7 @@ export const login = curry<
         const userCredential = await signInWithEmailAndPassword(auth, params.username, params.password);
         logger(userCredential.user);
       } catch (ex: any) {
-        logger(ex.message);
+        logger("[login error]: ", ex.message);
         throw new Error(ex);
       }
     };

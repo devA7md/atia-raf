@@ -17,7 +17,7 @@ export const checkError = curry<
   if (customAuthProvider.checkError) defaultQuery = customAuthProvider.checkError;
   else {
     defaultQuery = async (error: any) => {
-      logger({ error });
+      logger("[checkError]: ", error);
 
       const status = error.status;
       if (status === 401 || status === 403) return Promise.reject();

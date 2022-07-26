@@ -21,7 +21,7 @@ export const getPermissions = curry<
       try {
         return await checkAuthedUser({ auth, logger });
       } catch (ex: any) {
-        logger(ex.message);
+        logger("[getPermissions error]: ", ex.message);
       }
     };
 

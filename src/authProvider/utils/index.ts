@@ -11,7 +11,7 @@ export const checkAuthedUser = ({ auth, logger }: { auth: Auth; logger: Logger }
         else reject("User not found");
       },
       error(ex) {
-        logger(ex.message);
+        logger("[checkAuthedUser error]: ", ex.message);
         unsubscribeToAuthChange();
         reject(ex.message);
       },

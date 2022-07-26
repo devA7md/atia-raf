@@ -28,7 +28,7 @@ export const getIdentity = (
           });
         }
       } catch (ex: any) {
-        logger(ex);
+        logger("[getIdentity error]: ", ex);
         return Promise.reject(ex);
       }
     };

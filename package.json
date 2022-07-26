@@ -1,7 +1,7 @@
 {
   "name": "@atia/raf",
-  "version": "1.0.0",
-  "description": "A package for handling react-admin apis with firebase",
+  "version": "1.0.1",
+  "description": "A package for handling react-admin APIS with firebase",
   "types": "lib/cjs/index.d.ts",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -31,7 +31,8 @@
   },
   "keywords": [
     "react-admin",
-    "firebase"
+    "firebase",
+    "react-admin-firebase"
   ],
   "dependencies": {
     "ramda": "^0.28.0"

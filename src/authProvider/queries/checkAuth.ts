@@ -18,14 +18,14 @@ export const checkAuth = curry<
   if (customAuthProvider.checkAuth) defaultQuery = customAuthProvider.checkAuth;
   else
     defaultQuery = async (params: any) => {
-      logger({ params });
+      logger("[checkAuth params]: ", { params });
 
       try {
         await checkAuthedUser({ auth, logger });
         return Promise.resolve();
       } catch (ex: any) {
-        logger(ex);
-        return Promise.reject();
+        logger("[checkAuth error]: ", ex);
+        return Promise.reject(ex);
       }
     };
 
